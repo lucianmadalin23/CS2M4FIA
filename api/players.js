@@ -1,21 +1,24 @@
 import mysql from 'mysql2/promise';
 
-const dbConfig = {
+const pool = mysql.createPool({
   host: 'sql7.freesqldatabase.com',
   port: 3306,
   user: 'sql7817824',
   password: 'y4iEqLIkpa',
   database: 'sql7817824',
-  ssl: false
-};
+  ssl: false,
+  connectionLimit: 2,
+  waitForConnections: true,
+  queueLimit: 0
+});
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate');
+  res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate');
 
   try {
-    const conn = await mysql.createConnection(dbConfig);
+    const conn = await pool.getConnection();
 
     const [players] = await conn.execute(`
       SELECT 
@@ -33,8 +36,41 @@ export default async function handler(req, res) {
       ORDER BY ui.playtime DESC
     `);
 
-    // Get kill counts per player from sessions
     const [sessions] = await conn.execute(`
+      SELECT uuid, SUM(mob_kills) as total_mob_kills, SUM(deaths) as total_deaths
+      FROM plan_sessions
+      GROUP BY uuid
+    `);
+
+    conn.release();
+
+    const sessionMap = {};
+    sessions.forEach(s => {
+      sessionMap[s.uuid] = {
+        mob_kills: s.total_mob_kills || 0,
+        deaths: s.total_deaths || 0
+      };
+    });
+
+    const result = players.map(p => ({
+      name: p.name,
+      uuid: p.uuid,
+      playtime: p.playtime || 0,
+      mob_kills: (sessionMap[p.uuid]?.mob_kills) || p.mob_kills || 0,
+      deaths: (sessionMap[p.uuid]?.deaths) || p.deaths || 0,
+      player_kills: p.player_kills || 0,
+      last_seen: p.last_seen || null,
+      registered: p.registered || null,
+      times_kicked: p.times_kicked || 0
+    }));
+
+    res.status(200).json({ success: true, players: result });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}    const [sessions] = await conn.execute(`
       SELECT uuid, SUM(mob_kills) as total_mob_kills, SUM(deaths) as total_deaths
       FROM plan_sessions
       GROUP BY uuid
