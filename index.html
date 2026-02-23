@@ -15,134 +15,61 @@
       --border: rgba(232,0,30,0.2);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background: #0a0a0a;
-      color: #fff;
-      font-family: 'Exo 2', sans-serif;
-      min-height: 100vh;
-    }
+    body { background: #0a0a0a; color: #fff; font-family: 'Exo 2', sans-serif; min-height: 100vh; }
     body::before {
-      content:'';
-      position:fixed; inset:0;
+      content:''; position:fixed; inset:0;
       background-image: linear-gradient(rgba(232,0,30,0.04) 1px,transparent 1px), linear-gradient(90deg,rgba(232,0,30,0.04) 1px,transparent 1px);
-      background-size: 40px 40px;
-      z-index:0; pointer-events:none;
+      background-size: 40px 40px; z-index:0; pointer-events:none;
     }
-    body::after {
-      content:'';
-      position:fixed; top:0; left:0; right:0; height:3px;
-      background: linear-gradient(90deg,transparent,var(--red),transparent);
-      z-index:100;
-    }
+    body::after { content:''; position:fixed; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg,transparent,var(--red),transparent); z-index:100; }
     .container { max-width:1300px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
-
     header { padding:28px 0 20px; border-bottom:1px solid var(--border); margin-bottom:40px; }
     .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
     .logo-area { display:flex; align-items:center; gap:16px; }
     .logo-area img { height:56px; object-fit:contain; filter:drop-shadow(0 0 12px var(--red-glow)); }
     .server-name { font-family:'Rajdhani',sans-serif; font-size:28px; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
     .server-name span { color:var(--red); }
-    .live-badge {
-      display:flex; align-items:center; gap:8px;
-      background:rgba(232,0,30,0.1); border:1px solid var(--border);
-      border-radius:20px; padding:6px 14px;
-      font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--red);
-    }
+    .live-badge { display:flex; align-items:center; gap:8px; background:rgba(232,0,30,0.1); border:1px solid var(--border); border-radius:20px; padding:6px 14px; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--red); }
     .live-dot { width:8px; height:8px; background:var(--red); border-radius:50%; animation:pulse 1.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-    /* SUMMARY */
     .summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:48px; }
-    .summary-card {
-      background:var(--card-bg); border:1px solid var(--border); border-radius:10px;
-      padding:20px; display:flex; flex-direction:column; gap:6px;
-      position:relative; overflow:hidden; animation:fadeUp 0.5s ease both;
-    }
+    .summary-card { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:20px; display:flex; flex-direction:column; gap:6px; position:relative; overflow:hidden; animation:fadeUp 0.5s ease both; }
     .summary-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--red); transform:scaleX(0); transition:transform 0.3s; }
     .summary-card:hover::before { transform:scaleX(1); }
     .s-icon { font-size:26px; }
     .s-value { font-family:'Rajdhani',sans-serif; font-size:26px; font-weight:700; color:var(--red); }
     .s-label { font-size:11px; color:#777; text-transform:uppercase; letter-spacing:1px; }
-
-    /* CONTROLS */
     .controls { display:flex; gap:12px; margin-bottom:28px; flex-wrap:wrap; }
     .search-box { flex:1; min-width:200px; position:relative; }
-    .search-box input {
-      width:100%; background:var(--card-bg); border:1px solid var(--border);
-      border-radius:8px; padding:11px 14px 11px 42px;
-      color:#fff; font-family:'Exo 2',sans-serif; font-size:14px; outline:none;
-      transition:border-color 0.2s;
-    }
+    .search-box input { width:100%; background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px 11px 42px; color:#fff; font-family:'Exo 2',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; }
     .search-box input:focus { border-color:var(--red); }
     .search-box input::placeholder { color:#444; }
     .search-box::before { content:'🔍'; position:absolute; left:13px; top:50%; transform:translateY(-50%); font-size:15px; }
-    .sort-select {
-      background:var(--card-bg); border:1px solid var(--border); border-radius:8px;
-      padding:11px 14px; color:#fff; font-family:'Exo 2',sans-serif; font-size:14px; outline:none; cursor:pointer;
-    }
+    .sort-select { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px; color:#fff; font-family:'Exo 2',sans-serif; font-size:14px; outline:none; cursor:pointer; }
     .sort-select:focus { border-color:var(--red); }
-
-    /* SECTION TITLE */
-    .section-title {
-      font-family:'Rajdhani',sans-serif; font-size:20px; font-weight:700;
-      letter-spacing:2px; text-transform:uppercase; margin-bottom:18px;
-      display:flex; align-items:center; gap:12px;
-    }
+    .section-title { font-family:'Rajdhani',sans-serif; font-size:20px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:18px; display:flex; align-items:center; gap:12px; }
     .section-title::after { content:''; flex:1; height:1px; background:var(--border); }
-
-    /* PLAYERS GRID */
     .players-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:18px; margin-bottom:60px; }
-    .player-card {
-      background:var(--card-bg); border:1px solid var(--border); border-radius:12px;
-      overflow:hidden; transition:transform 0.2s,border-color 0.2s,box-shadow 0.2s;
-      animation:fadeUp 0.4s ease both; cursor:pointer;
-    }
+    .player-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:transform 0.2s,border-color 0.2s,box-shadow 0.2s; animation:fadeUp 0.4s ease both; cursor:pointer; }
     .player-card:hover { transform:translateY(-4px); border-color:var(--red); box-shadow:0 8px 30px rgba(232,0,30,0.2); }
-
-    .player-header {
-      background:linear-gradient(135deg,#1a0000,#0f0f0f);
-      padding:18px 20px; display:flex; align-items:center; gap:14px;
-      border-bottom:1px solid var(--border);
-    }
+    .player-header { background:linear-gradient(135deg,#1a0000,#0f0f0f); padding:18px 20px; display:flex; align-items:center; gap:14px; border-bottom:1px solid var(--border); }
     .player-avatar { width:50px; height:50px; border-radius:6px; border:2px solid var(--red); box-shadow:0 0 10px var(--red-glow); image-rendering:pixelated; }
     .player-info { flex:1; }
     .player-name { font-family:'Rajdhani',sans-serif; font-size:20px; font-weight:700; letter-spacing:1px; }
     .player-sub { font-size:11px; color:#555; margin-top:2px; }
     .player-rank { font-family:'Rajdhani',sans-serif; font-size:26px; font-weight:800; color:rgba(232,0,30,0.2); }
-
     .player-stats { padding:14px 20px; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
     .stat-item { display:flex; flex-direction:column; gap:1px; }
     .stat-label { font-size:10px; color:#555; text-transform:uppercase; letter-spacing:0.8px; }
     .stat-value { font-family:'Rajdhani',sans-serif; font-size:17px; font-weight:600; }
     .stat-value.red { color:var(--red); }
-
-    .player-footer {
-      padding:10px 20px; border-top:1px solid var(--border);
-      display:flex; justify-content:space-between; align-items:center;
-      font-size:11px; color:#444;
-    }
-    .online-badge {
-      background:rgba(0,200,80,0.12); color:#00c850;
-      border:1px solid rgba(0,200,80,0.25); border-radius:4px;
-      padding:2px 8px; font-size:10px; font-weight:700; letter-spacing:1px;
-    }
-
-    /* MODAL */
-    .modal-overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,0.88);
-      z-index:1000; display:none; align-items:center; justify-content:center; padding:20px;
-    }
+    .player-footer { padding:10px 20px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#444; }
+    .online-badge { background:rgba(0,200,80,0.12); color:#00c850; border:1px solid rgba(0,200,80,0.25); border-radius:4px; padding:2px 8px; font-size:10px; font-weight:700; letter-spacing:1px; }
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:1000; display:none; align-items:center; justify-content:center; padding:20px; }
     .modal-overlay.open { display:flex; }
-    .modal {
-      background:#111; border:1px solid var(--red); border-radius:14px;
-      width:100%; max-width:660px; max-height:90vh; overflow-y:auto;
-      box-shadow:0 0 60px var(--red-glow); animation:modalIn 0.25s ease;
-    }
+    .modal { background:#111; border:1px solid var(--red); border-radius:14px; width:100%; max-width:660px; max-height:90vh; overflow-y:auto; box-shadow:0 0 60px var(--red-glow); animation:modalIn 0.25s ease; }
     @keyframes modalIn { from{transform:scale(0.92);opacity:0} to{transform:scale(1);opacity:1} }
-    .modal-header {
-      padding:18px 22px; border-bottom:1px solid var(--border);
-      display:flex; align-items:center; gap:14px;
-    }
+    .modal-header { padding:18px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:14px; }
     .modal-header img { width:42px; height:42px; border-radius:5px; image-rendering:pixelated; }
     .modal-header h2 { font-family:'Rajdhani',sans-serif; font-size:22px; font-weight:700; flex:1; }
     .modal-close { background:none; border:none; color:#666; font-size:22px; cursor:pointer; transition:color 0.2s; }
@@ -154,27 +81,17 @@
     .stats-table td { padding:10px 6px; font-size:14px; }
     .stats-table td:first-child { color:#777; }
     .stats-table td:last-child { text-align:right; font-family:'Rajdhani',sans-serif; font-size:17px; font-weight:600; }
-
-    /* LOADING / ERROR */
     .loading { text-align:center; padding:80px 20px; color:#555; }
     .loading .spin { font-size:48px; animation:spin 1s linear infinite; display:block; margin-bottom:16px; }
     @keyframes spin { to{transform:rotate(360deg)} }
-    .error-box {
-      background:rgba(232,0,30,0.08); border:1px solid rgba(232,0,30,0.3);
-      border-radius:10px; padding:20px; text-align:center; color:#cc4444; margin-bottom:30px;
-    }
+    .error-box { background:rgba(232,0,30,0.08); border:1px solid rgba(232,0,30,0.3); border-radius:10px; padding:20px; text-align:center; color:#cc4444; margin-bottom:30px; }
     .no-results { text-align:center; padding:40px; color:#444; grid-column:1/-1; }
-
     @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
     ::-webkit-scrollbar { width:6px; }
     ::-webkit-scrollbar-track { background:#0a0a0a; }
     ::-webkit-scrollbar-thumb { background:var(--red-dark); border-radius:3px; }
     footer { text-align:center; padding:30px; color:#2a2a2a; font-size:12px; border-top:1px solid #141414; }
-
-    @media(max-width:600px) {
-      .players-grid { grid-template-columns:1fr; }
-      .summary-grid { grid-template-columns:repeat(2,1fr); }
-    }
+    @media(max-width:600px) { .players-grid { grid-template-columns:1fr; } .summary-grid { grid-template-columns:repeat(2,1fr); } }
   </style>
 </head>
 <body>
@@ -185,23 +102,16 @@
         <img src="https://i.imgur.com/ifam2yF.png" alt="Logo" onerror="this.style.display='none'">
         <div class="server-name">CS2M<span>4FIA</span></div>
       </div>
-      <div class="live-badge">
-        <div class="live-dot"></div>
-        LIVE Stats
-      </div>
+      <div class="live-badge"><div class="live-dot"></div>LIVE Stats</div>
     </div>
   </header>
-
   <div id="error-area"></div>
-
   <div id="loading" class="loading">
     <span class="spin">⚙️</span>
     <p>Se încarcă statisticile...</p>
   </div>
-
   <div id="main" style="display:none">
     <div class="summary-grid" id="summary-grid"></div>
-
     <div class="controls">
       <div class="search-box">
         <input type="text" id="search" placeholder="Caută jucător..." oninput="renderPlayers()">
@@ -213,13 +123,11 @@
         <option value="deaths">💀 Deaths</option>
       </select>
     </div>
-
     <div class="section-title">🎮 Clasament Jucători</div>
     <div class="players-grid" id="players-grid"></div>
   </div>
 </div>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal">
     <div class="modal-header">
@@ -238,15 +146,12 @@
 <script>
   let allPlayers = [];
 
-  // ===== FETCH DATA =====
   async function loadData() {
     try {
       const res = await fetch('/api/players');
       const data = await res.json();
-
       if (!data.success) throw new Error(data.error || 'Eroare API');
-
-      allPlayers = data.players;
+      allPlayers = data.players || [];
       document.getElementById('loading').style.display = 'none';
       document.getElementById('main').style.display = 'block';
       renderSummary();
@@ -262,14 +167,12 @@
     }
   }
 
-  // ===== SUMMARY =====
   function renderSummary() {
     const total = allPlayers.length;
     const totalH = allPlayers.reduce((s,p) => s + Math.floor((p.playtime||0)/3600000), 0);
     const totalMobs = allPlayers.reduce((s,p) => s + Number(p.mob_kills||0), 0);
     const totalDeaths = allPlayers.reduce((s,p) => s + Number(p.deaths||0), 0);
     const totalPvP = allPlayers.reduce((s,p) => s + Number(p.player_kills||0), 0);
-
     document.getElementById('summary-grid').innerHTML = [
       { icon:'👥', value: total, label:'Jucători' },
       { icon:'⏱', value: totalH.toLocaleString()+'h', label:'Ore jucate total' },
@@ -285,11 +188,9 @@
     `).join('');
   }
 
-  // ===== PLAYERS =====
   function renderPlayers() {
     const search = document.getElementById('search').value.toLowerCase();
     const sort = document.getElementById('sort-by').value;
-
     let list = allPlayers.filter(p => p.name.toLowerCase().includes(search));
     list.sort((a,b) => {
       if (sort === 'playtime') return (b.playtime||0) - (a.playtime||0);
@@ -297,13 +198,11 @@
       if (sort === 'player_kills') return Number(b.player_kills||0) - Number(a.player_kills||0);
       if (sort === 'deaths') return Number(b.deaths||0) - Number(a.deaths||0);
     });
-
     const grid = document.getElementById('players-grid');
     if (!list.length) {
       grid.innerHTML = '<div class="no-results">Niciun jucător găsit 🔍</div>';
       return;
     }
-
     const now = Date.now();
     grid.innerHTML = list.map((p, i) => {
       const hours = Math.floor((p.playtime||0) / 3600000);
@@ -311,13 +210,12 @@
       const isOnline = p.last_seen && (now - p.last_seen) < 600000;
       const lastSeen = p.last_seen ? timeAgo(p.last_seen) : 'Necunoscut';
       const delay = Math.min(i * 0.05, 0.6);
-
       return `
         <div class="player-card" style="animation-delay:${delay}s" onclick="openModal('${esc(p.name)}')">
           <div class="player-header">
             <img class="player-avatar"
-              src="https://crafatar.com/avatars/${p.uuid}?size=50&overlay"
-              onerror="this.src='https://crafatar.com/avatars/MHF_Steve?size=50'"
+              src="https://minotar.net/avatar/${esc(p.name)}/50"
+              onerror="this.src='https://minotar.net/avatar/MHF_Steve/50'"
               alt="${esc(p.name)}">
             <div class="player-info">
               <div class="player-name">${esc(p.name)}</div>
@@ -352,14 +250,12 @@
     }).join('');
   }
 
-  // ===== MODAL =====
   function openModal(name) {
     const p = allPlayers.find(x => x.name === name);
     if (!p) return;
     const hours = Math.floor((p.playtime||0) / 3600000);
     const mins = Math.floor(((p.playtime||0) % 3600000) / 60000);
-
-    document.getElementById('modal-avatar').src = `https://crafatar.com/avatars/${p.uuid}?size=42&overlay`;
+    document.getElementById('modal-avatar').src = `https://minotar.net/avatar/${p.name}/42`;
     document.getElementById('modal-name').textContent = p.name;
     document.getElementById('modal-table').innerHTML = [
       ['⏱ Ore jucate', `${hours}h ${mins}m`],
@@ -370,7 +266,6 @@
       ['📅 Înregistrat', p.registered ? new Date(p.registered).toLocaleDateString('ro-RO') : '—'],
       ['🕐 Ultima activitate', p.last_seen ? new Date(p.last_seen).toLocaleString('ro-RO') : '—'],
     ].map(([l,v]) => `<tr><td>${l}</td><td>${v}</td></tr>`).join('');
-
     document.getElementById('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -382,7 +277,6 @@
     }
   }
 
-  // ===== UTILS =====
   function timeAgo(ts) {
     const diff = Date.now() - ts;
     const m = Math.floor(diff/60000);
@@ -397,9 +291,8 @@
 
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  // ===== INIT =====
   loadData();
-  setInterval(loadData, 60000); // refresh la 60 secunde
+  setInterval(loadData, 60000);
 </script>
 </body>
 </html>
