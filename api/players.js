@@ -19,14 +19,27 @@ export default async function handler(req, res) {
   try {
     const conn = await pool.getConnection();
 
-    const [columns] = await conn.execute(`
-      SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS 
-      WHERE TABLE_SCHEMA = 'railway' AND TABLE_NAME = 'plan_user_info'
+    const [players] = await conn.execute(`
+      SELECT 
+        u.name,
+        u.uuid,
+        COALESCE(SUM(s.playtime_ticks), 0) as playtime,
+        COALESCE(SUM(s.mob_kills), 0) as mob_kills,
+        COALESCE(SUM(s.deaths), 0) as deaths,
+        COALESCE(SUM(s.player_kills), 0) as player_kills,
+        MAX(s.session_end) as last_seen,
+        ui.registered,
+        0 as times_kicked
+      FROM plan_users u
+      LEFT JOIN plan_user_info ui ON u.uuid = ui.user_id
+      LEFT JOIN plan_sessions s ON u.uuid = s.user_id
+      GROUP BY u.uuid, u.name, ui.registered
+      ORDER BY playtime DESC
     `);
 
     conn.release();
 
-    res.status(200).json({ success: true, columns: columns.map(c => c.COLUMN_NAME) });
+    res.status(200).json({ success: true, players });
 
   } catch (err) {
     console.error(err);
