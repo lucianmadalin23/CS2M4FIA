@@ -19,44 +19,14 @@ export default async function handler(req, res) {
   try {
     const conn = await pool.getConnection();
 
-    const [players] = await conn.execute(`
-      SELECT u.name, u.uuid, ui.playtime, ui.mob_kills,
-        ui.deaths, ui.player_kills, ui.last_seen,
-        ui.registered, ui.times_kicked
-      FROM plan_users u
-      LEFT JOIN plan_user_info ui ON u.uuid = ui.uuid
-      ORDER BY ui.playtime DESC
-    `);
-
-    const [sessions] = await conn.execute(`
-      SELECT uuid, SUM(mob_kills) as total_mob_kills, SUM(deaths) as total_deaths
-      FROM plan_sessions
-      GROUP BY uuid
+    const [columns] = await conn.execute(`
+      SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS 
+      WHERE TABLE_SCHEMA = 'railway' AND TABLE_NAME = 'plan_user_info'
     `);
 
     conn.release();
 
-    const sessionMap = {};
-    sessions.forEach(s => {
-      sessionMap[s.uuid] = {
-        mob_kills: s.total_mob_kills || 0,
-        deaths: s.total_deaths || 0
-      };
-    });
-
-    const result = players.map(p => ({
-      name: p.name,
-      uuid: p.uuid,
-      playtime: p.playtime || 0,
-      mob_kills: (sessionMap[p.uuid]?.mob_kills) || p.mob_kills || 0,
-      deaths: (sessionMap[p.uuid]?.deaths) || p.deaths || 0,
-      player_kills: p.player_kills || 0,
-      last_seen: p.last_seen || null,
-      registered: p.registered || null,
-      times_kicked: p.times_kicked || 0
-    }));
-
-    res.status(200).json({ success: true, players: result });
+    res.status(200).json({ success: true, columns: columns.map(c => c.COLUMN_NAME) });
 
   } catch (err) {
     console.error(err);
